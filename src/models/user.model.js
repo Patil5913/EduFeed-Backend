@@ -1,38 +1,31 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+const {Schema, mongoose}  = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
-      lowercase: true,
-      trim: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true,
-      lowercase: true,
-      index: true,
     },
     password: {
       type: String,
       required: true,
     },
     prn: {
-      type: Number,
+      type: String,
       required: true,
-      unique: true,
     },
     branch: {
       type: String,
       required: true,
     },
     currentsem: {
-      type: Number,
+      type: String,
       required: true,
     },
     role: {
@@ -85,4 +78,6 @@ userSchema.methods.generateRefreshToken = function () {
   }, process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME});
 }
 
-export const User = mongoose.model("User", userSchema);
+const userData = mongoose.model("user", userSchema);
+
+module.exports = userData;
