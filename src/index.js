@@ -7,6 +7,7 @@ const connectDB = require('../src/DB/connection');
 require('dotenv').config();
 const port = process.env.PORT ;
 const router = require('./routers/router');
+const { parse } = require('dotenv');
 
 app.use(cors({
   origin:process.env.CLIENT_URL,
