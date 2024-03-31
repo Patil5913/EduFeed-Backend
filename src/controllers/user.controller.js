@@ -161,6 +161,20 @@ const registerUser = {
         message: "Internal server error",
       });
     }
+  },
+  getCurrentUser: async (req, res) => {
+    try {
+      const user = await userData.findById(req.user._id);
+      res.status(200).json({
+        user: user,
+        message: "User fetched successfully",
+      });
+    } catch (error) {
+      console.error("Error occurred during fetching user:", error);
+      res.status(500).json({
+        message: "Internal server error",
+      });
+    }
   }
 };
 

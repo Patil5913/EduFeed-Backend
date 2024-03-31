@@ -8,7 +8,8 @@ router.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-router.get("/getuser", userController.getAllUsers);
+router.get("/getalluser", userController.getAllUsers);
+router.get("/getcurruser", auth, userController.getCurrentUser);
 router.post("/register", userController.register);
 router.post("/login", userController.loginUser);
 router.post("/logout", auth ,userController.logoutUser);
