@@ -137,6 +137,30 @@ const registerUser = {
         message: "Internal server error",
       });
     }
+  },
+  forgotPassword: async (req, res) => {
+    const {prn,email,newpassword}=req.body;
+    if(prn === undefined || prn === '' || email === undefined || email === ''){
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    try {
+      const user = await userData.findOne({ prn: prn, email: email });
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+      user.password = newpassword;
+      await user.save({ validateBeforeSave: false });
+      res.status(200).json({
+        message: "Password updated successfully",
+      });
+    } catch (error) {
+      console.error("Error occurred during forgot password:", error);
+      res.status(500).json({
+        message: "Internal server error",
+      });
+    }
   }
 };
 

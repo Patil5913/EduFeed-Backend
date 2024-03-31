@@ -12,5 +12,6 @@ router.get("/getuser", userController.getAllUsers);
 router.post("/register", userController.register);
 router.post("/login", userController.loginUser);
 router.post("/logout", auth ,userController.logoutUser);
+router.post("/forgotpassword", userController.forgotPassword);
 //  upload.fields([]),
 module.exports = router;
