@@ -31,7 +31,7 @@ const userSchema = new Schema(
     role: {
       type: String,
       default: "student",
-      enum: ["student", "mentor", "authority", "admin"],
+      // enum: ["student", "mentor", "authority", "admin"],
     },
     refreshToken: {
       type: String,
@@ -52,6 +52,7 @@ userSchema.pre("save", async function (next) {
     return next(err);
   }
 });
+
 
 userSchema.methods.comparePassword = async function (attempt, next) {
   try {
