@@ -1,18 +1,28 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const feedbackSchema = new Schema(
   {
-    mentorQuestions: [
+    feedbackQuestion: [
       {
-        type: String,
+        email: {
+          type: String,
+        },
+        semester: {
+          type: String,
+        },
+        subjects: [
+          {
+            type: String,
+          },
+        ],
+        questions: [
+          {
+            type: String,
+          },
+        ],
       },
     ],
-    email: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     answers: [
       {
         selectedOption: {
@@ -29,4 +39,5 @@ const feedbackSchema = new Schema(
   { timestamps: true }
 );
 
-export const Feedback = mongoose.model("Feedback", feedbackSchema);
+const Feedback = mongoose.model("Feedback", feedbackSchema);
+module.exports = Feedback;

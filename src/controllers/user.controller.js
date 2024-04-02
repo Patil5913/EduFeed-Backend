@@ -79,8 +79,9 @@ const registerUser = {
 
     try {
       for (const row of req.file.buffer.toString().split("\n")) {
+        const cleanedRow = row.replace(/\r/g, '');
         const [name, email, password, prn, branch, currentsem, role] =
-          row.split(",");
+        cleanedRow.split(",");
 
         const existingUser = await userData.findOne({ email });
         if (existingUser) {
