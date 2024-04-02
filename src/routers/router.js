@@ -16,4 +16,3 @@ router.post("/logout", auth ,userController.logoutUser);
 router.post("/forgotpassword", userController.forgotPassword);
 router.post('/uploadcsv', upload.single('csvFile'), userController.uploadCSV);
 module.exports = router;
-
