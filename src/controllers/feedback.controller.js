@@ -1,8 +1,9 @@
 // const mongoose  = require("mongoose");
 const userData = require("../models/user.model");
-const feedbackData = require("../models/feedback.model");
+const feedbackAnswer = require("../models/feedback.model");
 const feedbackQuestion = require("../models/feedbackquestion.model");
 const jwt = require("jsonwebtoken");
+const { all } = require("../routers/router");
 
 const feedbackController = {
   submitQuestion: async (req, res) => {
@@ -21,7 +22,8 @@ const feedbackController = {
 
       const email = decodedToken.email;
       const semester = decodedToken.currentsem;
-      if (!email || !semester) {
+      const role = decodedToken.role;
+      if ((!email || !semester) && role==="mentor") {
         return res.status(400).json({ error: "Invalid user or semester" });
       }
 
@@ -42,6 +44,87 @@ const feedbackController = {
       res
         .status(200)
         .json({ message: "Feedback questions submitted successfully" });
+    } catch (error) {
+      // Return error response
+      res.status(500).json({ message: error.message });
+    }
+  },
+  submitFeedback: async (req, res) => {
+    try {
+      const accessToken = req.cookies.accessToken;
+
+      if (!accessToken) {
+        return res.status(400).json({ error: "Cookie not found" });
+      }
+
+      const decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+      const { answers, comments } = req.body;
+
+      const email = decodedToken.email;
+      const semester = decodedToken.currentsem;
+      const role = decodedToken.role;
+      const user = await feedbackAnswer.findOne({ email });
+      if (user) {
+        return res.status(400).json({ error: "Feedback already submitted" });
+      }
+      if (!email && !semester && role !== "student" ) {
+        return res.status(400).json({ error: "Invalid user or semester" });
+      }
+
+
+      // Fetch feedback questions for the current semester
+      const feedbackQuestions = await feedbackQuestion.findOne({ semester });
+
+      if (!feedbackQuestions) {
+        return res.status(404).json({ error: "Feedback questions not found for this semester" });
+      }
+
+      const subjects = feedbackQuestions.subjects;
+      const options = answers.map(item => item.selectedOption);
+      const allAnswers = [];
+      for (const subject of subjects) {
+        const questions = feedbackQuestions.questions.toString().split(",");
+        for (const question of questions) {
+          allAnswers.push({
+            question:question,
+            selectedOption: options.shift(),
+          });
+          
+        }
+      }
+
+      console.log(allAnswers);
+      // Save feedback answers
+      const answer = new feedbackAnswer({
+        email,
+        semester,
+        answers: allAnswers,
+        comments,
+      });
+
+      await answer.save();
+
+      res.status(200).json({ message: "Feedback answers submitted successfully" });
+    } catch (error) {
+      // Return error response
+      res.status(500).json({ message: error.message });
+    }
+  },  
+  getQuestions: async (req, res) => {
+    try {
+
+      const questions = await feedbackQuestion.find({});
+      res.status(200).
+      json({ 
+        questions: questions.map((question) => {
+          return {
+            semester: question.semester,
+            subjects: question.subjects,
+            questions: question.questions,
+          };
+        }),
+      });
     } catch (error) {
       // Return error response
       res.status(500).json({ message: error.message });
