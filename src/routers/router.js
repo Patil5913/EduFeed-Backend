@@ -19,4 +19,7 @@ router.post('/uploadcsv', upload.single('csvFile'), userController.uploadCSV);
 router.post('/submitquestion', auth, feedbackController.submitQuestion);
 router.post('/submitfeedback', auth, feedbackController.submitFeedback);
 router.get('/getquestion',  feedbackController.getQuestions);
+router.get('/getfeedback', auth, feedbackController.getFeedback);
+router.get('/getstudentdetail', auth, feedbackController.getStudentDetail);
+
 module.exports = router;

@@ -5,6 +5,8 @@ const upload = require("../middleware/multer.middleware");
 const csvParser = require("csv-parser");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const cron = require("node-cron");
+
 const registerUser = {
   getAllUsers: async (req, res) => {
     try {
@@ -79,9 +81,9 @@ const registerUser = {
 
     try {
       for (const row of req.file.buffer.toString().split("\n")) {
-        const cleanedRow = row.replace(/\r/g, '');
+        const cleanedRow = row.replace(/\r/g, "");
         const [name, email, password, prn, branch, currentsem, role] =
-        cleanedRow.split(",");
+          cleanedRow.split(",");
 
         const existingUser = await userData.findOne({ email });
         if (existingUser) {

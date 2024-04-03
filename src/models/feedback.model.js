@@ -3,13 +3,15 @@ const { Schema } = mongoose;
 
 const feedbackSchema = new Schema(
   {
+    name: {
+      type: String,
+    },
     email: {
       type: String,
     },
     semester: {
       type: String,
     },
-    
     answers: [
       
       {
