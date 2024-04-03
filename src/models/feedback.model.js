@@ -32,3 +32,188 @@ const feedbackSchema = new Schema(
 
 const Feedback = mongoose.model("Feedback", feedbackSchema);
 module.exports = Feedback;
+/*
+{
+  "answers": [
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    },
+    {
+      "selectedOption": "Option 1"
+    },
+    {
+      "selectedOption": "Option 2"
+    },
+    {
+      "selectedOption": "Option 3"
+    },
+    {
+      "selectedOption": "Option 4"
+    },
+    {
+      "selectedOption": "Option 5"
+    }
+  ]
+} */
