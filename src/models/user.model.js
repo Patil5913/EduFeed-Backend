@@ -62,7 +62,7 @@ cron.schedule(
       // console.log(students);
       for (const student of students) {
         const currentSemester = parseInt(student.currentsem);
-        const nextSemester = currentSemester + 3;
+        const nextSemester = currentSemester + 1;
 
         if (nextSemester > 8) {
           await userData.deleteOne({ _id: student._id });
