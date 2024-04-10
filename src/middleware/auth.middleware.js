@@ -10,8 +10,6 @@ const auth = async (req, res, next) => {
       throw new Error('Token not found');
     }
     
-    // console.log("Token:", token);
-
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     // console.log("Decoded token:", decoded);
     // console.log("Decoded token ID:", decoded.id);
