@@ -26,21 +26,17 @@ const feedbackController = {
       if ((!email || !semester) && role === "mentor") {
         return res.status(400).json({ error: "Invalid user or semester" });
       }
-
       
-      if (
-        !subjects ||
-        !questions ||
-        !(
+      if (!subjects || !questions ||(
           subjects.length === 5 ||
           subjects.length === 6 ||
           subjects.length === 7
         ) ||
-        questions.length !== 10
+        questions.length !== ((subjects.length)*10)
       ) {
         return res.status(400).json({
           error:
-            "Invalid number of subjects or questions entered, subjects must be 5,6 or 7 and questions must be 10",
+            `Invalid number of subjects or questions entered, subjects must be 5,6 or 7 and questions must be ${subjects.length*10}`,
         });
       }
 
@@ -50,7 +46,6 @@ const feedbackController = {
         subjects: subjects,
         questions: questions,
       });
-      //   console.log(feedback);
 
       await feedbackQuestionArr.save();
 
@@ -58,7 +53,6 @@ const feedbackController = {
         .status(200)
         .json({ message: "Feedback questions submitted successfully" });
     } catch (error) {
-      // Return error response
       res.status(500).json({ message: error.message });
     }
   },
@@ -89,7 +83,6 @@ const feedbackController = {
         return res.status(400).json({ error: "Invalid user or semester" });
       }
 
-      // Fetch feedback questions for the current semester
       const feedbackQuestions = await feedbackQuestion.findOne({ semester });
 
       if (!feedbackQuestions) {
@@ -112,7 +105,7 @@ const feedbackController = {
       }
 
       console.log(allAnswers);
-      // Save feedback answers
+
       const answer = new feedbackAnswer({
         name,
         email,
@@ -127,7 +120,6 @@ const feedbackController = {
         .status(200)
         .json({ message: "Feedback answers submitted successfully" });
     } catch (error) {
-      // Return error response
       res.status(500).json({ message: error.message });
     }
   },
@@ -250,13 +242,11 @@ const feedbackController = {
             });
         }
       } else {
-        // If the mentor is not assigned to a specific semester, return an error
         return res
           .status(400)
           .json({ error: "Mentor not assigned to any semester" });
       }
     } catch (error) {
-      // Return error response
       res.status(500).json({ message: error.message });
     }
   },

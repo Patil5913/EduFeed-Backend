@@ -11,15 +11,21 @@ router.get("/", (req, res) => {
 
 router.get("/getalluser", userController.getAllUsers);
 router.get("/getcurruser", auth, userController.getCurrentUser);
-router.post("/register", userController.register);
+
 router.post("/login", userController.loginUser);
 router.post("/logout", auth ,userController.logoutUser);
 router.post("/forgotpassword", userController.forgotPassword);
-router.post('/uploadcsv', upload.single('csvFile'), userController.uploadCSV);
 
+// mentor
+router.post('/uploadcsv', upload.single('csvFile'), userController.uploadCSV);
 router.post('/submitquestion', auth, feedbackController.submitQuestion);
+router.post("/register", userController.register);
+
+// student
 router.post('/submitfeedback', auth, feedbackController.submitFeedback);
 router.get('/getquestion',  feedbackController.getQuestions);
+
+// mentor and authority
 router.get('/getfeedback', auth, feedbackController.getFeedback);
 router.get('/getstudentdetail', auth, feedbackController.getStudentDetail);
 

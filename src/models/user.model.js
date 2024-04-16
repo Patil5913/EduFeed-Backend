@@ -59,7 +59,6 @@ cron.schedule(
     try {
       const students = await userData.find({ role: "student" });
       console.log("Updating student semester...");
-      // console.log(students);
       for (const student of students) {
         const currentSemester = parseInt(student.currentsem);
         const nextSemester = currentSemester + 1;
