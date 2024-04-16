@@ -28,9 +28,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })  );
 app.use("/api",router);
 
-
-
-
 connectDB().then(() => {
   app.listen(port || 6969 , () => console.log(`Server running successfully ${port}`));
 });
