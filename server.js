@@ -3,10 +3,10 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
-const connectDB = require('./src/DB/connection');
+const connectDB = require('./DB/connection');
 require('dotenv').config();
 const port = process.env.PORT ;
-const router = require('./src/routers/router');
+const router = require('./routers/router');
 const { parse } = require('dotenv');
 const { json } = require('express');
 
