@@ -145,7 +145,7 @@ const registerUser = {
 
       const { accessToken, refreshToken } =
         await registerUser.generateAccessAndRefreshToken(user._id);
-
+      const role = user.role;
       const options = {
         httpOnly: true,
         // secure: true,
@@ -159,6 +159,7 @@ const registerUser = {
         .json({
           accessToken: accessToken,
           refreshToken: refreshToken,
+          role: role,
           message: "User logged in successfully",
         });
     } catch (error) {
