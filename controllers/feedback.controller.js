@@ -8,16 +8,16 @@ const { all } = require("../routers/router");
 const feedbackController = {
   submitQuestion: async (req, res) => {
     try {
-      const accessToken = req.cookies.accessToken;
+      // const accessToken = req.cookies.accessToken;
   
-      if (!accessToken) {
-        return res.status(401).json({ error: "Unauthorized: Access token missing" });
-      }
+      // if (!accessToken) {
+      //   return res.status(401).json({ error: "Unauthorized: Access token missing" });
+      // }
   
-      const decodedToken = jwt.verify(
-        accessToken,
-        process.env.ACCESS_TOKEN_SECRET
-      );
+      // const decodedToken = jwt.verify(
+      //   accessToken,
+      //   process.env.ACCESS_TOKEN_SECRET
+      // );
   
       const { subjects, questions } = req.body;
   
