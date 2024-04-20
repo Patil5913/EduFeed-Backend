@@ -3,9 +3,7 @@ const userData = require("../models/user.model");
 
 const auth = async (req, res, next) => {
   try {
-
-    const token = req.cookies.accessToken; // Corrected token retrieval
-    
+    const token = req.body.token 
     if (!token) {
       throw new Error('Token not found');
     }

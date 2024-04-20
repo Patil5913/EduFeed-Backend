@@ -8,19 +8,20 @@ const { all } = require("../routers/router");
 const feedbackController = {
   submitQuestion: async (req, res) => {
     try {
-      const { accessToken, subjects, questions } = req.body;
-      if (!accessToken) {
+      const { token, subjects, questions } = req.body;
+
+      if (!token) {
         return res.status(401).json({ error: "Unauthorized: Access token missing" });
       }
-  
       const decodedToken = jwt.verify(
-        accessToken,
+        token,
         process.env.ACCESS_TOKEN_SECRET
       );
   
       const email = decodedToken.email;
       const semester = decodedToken.currentsem;
       const role = decodedToken.role;
+      console.log(semester)
   
       if ((!email || !semester) && role === "mentor") {
         return res.status(401).json({ error: "Unauthorized: Invalid user or semester" });
@@ -34,6 +35,11 @@ const feedbackController = {
           error: `Invalid number of subjects or questions entered, subjects must be between 5 and 7, and questions must be ${subjects.length * 10}`,
         });
       }
+      const feedbackQuestionExists = await feedbackQuestion.findOne({ semester });
+      if(feedbackQuestionExists){
+        return res.status(208).json({ error: "Feedback questions already submitted" });
+      }
+
   
       const feedbackQuestionArr = new feedbackQuestion({
         email: email,
@@ -46,6 +52,9 @@ const feedbackController = {
   
       res.status(200).json({ message: "Feedback questions submitted successfully" });
     } catch (error) {
+      if(error.status===401){
+        res.status(401).json({ error: "hehehe" });
+      }
       res.status(500).json({ error: error.message });
     }
   },
