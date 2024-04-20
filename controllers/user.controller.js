@@ -154,8 +154,8 @@ const registerUser = {
 
       res
         .status(200)
-        .cookies("accessToken", accessToken, options)
-        .cookies("refreshToken", refreshToken, options)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
         .json({
           accessToken: accessToken,
           refreshToken: refreshToken,
