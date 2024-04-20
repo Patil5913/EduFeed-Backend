@@ -21,7 +21,6 @@ const feedbackController = {
       const email = decodedToken.email;
       const semester = decodedToken.currentsem;
       const role = decodedToken.role;
-      console.log(semester)
   
       if ((!email || !semester) && role === "mentor") {
         return res.status(401).json({ error: "Unauthorized: Invalid user or semester" });
