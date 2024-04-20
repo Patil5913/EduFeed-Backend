@@ -8,8 +8,7 @@ const { all } = require("../routers/router");
 const feedbackController = {
   submitQuestion: async (req, res) => {
     try {
-      const accessToken = req.cookies.accessToken;
-  
+      const { accessToken, subjects, questions } = req.body;
       if (!accessToken) {
         return res.status(401).json({ error: "Unauthorized: Access token missing" });
       }
@@ -18,8 +17,6 @@ const feedbackController = {
         accessToken,
         process.env.ACCESS_TOKEN_SECRET
       );
-  
-      const { subjects, questions } = req.body;
   
       const email = decodedToken.email;
       const semester = decodedToken.currentsem;
