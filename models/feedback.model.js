@@ -12,18 +12,13 @@ const feedbackSchema = new Schema(
     semester: {
       type: String,
     },
-    answers: [
-      
-      {
-        question: {
-          type:String,
-        },
-        selectedOption: {
-          type: String,
-          enum: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
-        },
-      },
-    ],
+    selectedOptions: [{
+      answer: {
+        type: String,
+        required: true,
+        enum: ["1", "2", "3", "4", "5"],
+      }
+    }],
     comments: {
       type: String,
     },

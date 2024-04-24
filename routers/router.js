@@ -23,7 +23,7 @@ router.post("/register", userController.register);
 
 // student
 router.post('/submitfeedback', auth, feedbackController.submitFeedback);
-router.get('/getquestion',  feedbackController.getQuestions);
+router.post('/getquestion',  feedbackController.getQuestions);
 
 // mentor and authority
 router.get('/getfeedback', auth, feedbackController.getFeedback);

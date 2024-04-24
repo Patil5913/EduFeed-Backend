@@ -57,21 +57,18 @@ const feedbackController = {
       res.status(500).json({ error: error.message });
     }
   },
-  
   submitFeedback: async (req, res) => {
     try {
-      const accessToken = req.cookies.accessToken;
-
-      if (!accessToken) {
-        return res.status(400).json({ error: "Cookie not found" });
+      
+      const {token, answers, comments } = req.body;
+      if (!token) {
+        return res.status(401).json({ error: "Unauthorized: Access token missing" });
       }
-
+      
       const decodedToken = jwt.verify(
-        accessToken,
+        token,
         process.env.ACCESS_TOKEN_SECRET
       );
-
-      const { answers, comments } = req.body;
 
       const email = decodedToken.email;
       const name = decodedToken.name;
@@ -79,43 +76,22 @@ const feedbackController = {
       const role = decodedToken.role;
       const user = await feedbackAnswer.findOne({ email });
       if (user) {
-        return res.status(400).json({ error: "Feedback already submitted" });
+        return res.status(208).json({ error: "Feedback already submitted" });
       }
       if (!email && !semester && role !== "student") {
         return res.status(400).json({ error: "Invalid user or semester" });
       }
 
-      const feedbackQuestions = await feedbackQuestion.findOne({ semester });
-
-      if (!feedbackQuestions) {
-        return res
-          .status(404)
-          .json({ error: "Feedback questions not found for this semester" });
-      }
-
-      const subjects = feedbackQuestions.subjects;
-      const options = answers.map((item) => item.selectedOption);
-      const allAnswers = [];
-      for (const subject of subjects) {
-        const questions = feedbackQuestions.questions.toString().split(",");
-        for (const question of questions) {
-          allAnswers.push({
-            question: question,
-            selectedOption: options.shift(),
-          });
-        }
-      }
-
-      console.log(allAnswers);
-
+      const selectedOptions = answers.map(answer => ({ answer }));
+ 
       const answer = new feedbackAnswer({
         name,
         email,
         semester,
-        answers: allAnswers,
+        selectedOptions,
         comments,
       });
-
+      console.log(answer)
       await answer.save();
 
       res
@@ -127,11 +103,28 @@ const feedbackController = {
   },
   getQuestions: async (req, res) => {
     try {
-      const questions = await feedbackQuestion.find({});
+      const {token}= req.body;
+      if (!token) {
+        return res.status(401).json({ error: "Unauthorized: Access token missing" });
+      }
+
+      const decodedToken = jwt.verify(
+        token,
+        process.env.ACCESS_TOKEN_SECRET
+      );
+      const semester = decodedToken.currentsem;
+      const email = decodedToken.email;
+      const check = await feedbackAnswer.findOne({email:email});
+      
+      if(check){
+        return res.status(208).json({ error: "Feedback already submitted" });
+      }
+
+
+      const questions = await feedbackQuestion.find({semester:semester});
       res.status(200).json({
         questions: questions.map((question) => {
           return {
-            semester: question.semester,
             subjects: question.subjects,
             questions: question.questions,
           };
