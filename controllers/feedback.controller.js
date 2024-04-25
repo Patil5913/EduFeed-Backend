@@ -136,19 +136,18 @@ const feedbackController = {
   },
   getFeedback: async (req, res) => {
     try {
-      const accessToken = req.cookies.accessToken;
-
+      const token = req.body;
+      const accessToken = token.token
       if (!accessToken) {
         return res.status(400).json({ error: "Cookie not found" });
       }
-
       const decodedToken = jwt.verify(
         accessToken,
         process.env.ACCESS_TOKEN_SECRET
       );
       const email = decodedToken.email;
       const role = decodedToken.role;
-
+      
       if (role !== "mentor" && role !== "authority") {
         return res.status(400).json({ error: "Unauthorized role" });
       }
@@ -166,9 +165,9 @@ const feedbackController = {
           });
           if (feedbackSemester.length > 0) {
             const selectedOption = feedbackSemester.map((item) =>
-              item.answers.map((item) => item.selectedOption)
-            );
-            return res.status(200).json({ selectedOption: selectedOption });
+              item.selectedOptions.map((option) => option.answer)
+          );
+            return res.status(200).json({ selectedOption });
           } else {
             return res.status(400).json({
               message: "Feedback for the assigned semester does not exist",
@@ -185,7 +184,7 @@ const feedbackController = {
         const allFeedback = await feedbackAnswer.find({});
         const anonymousFeedback = allFeedback.map((item) => ({
           semester: item.semester,
-          feedback: "Anonymous",
+          selectedOptions: item.selectedOptions.map((option) => option.answer),
         }));
         return res.status(200).json({ feedback: anonymousFeedback });
       }

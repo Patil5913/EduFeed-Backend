@@ -26,7 +26,7 @@ router.post('/submitfeedback', auth, feedbackController.submitFeedback);
 router.post('/getquestion',  feedbackController.getQuestions);
 
 // mentor and authority
-router.get('/getfeedback', auth, feedbackController.getFeedback);
+router.post('/getfeedback', feedbackController.getFeedback);
 router.get('/getstudentdetail', auth, feedbackController.getStudentDetail);
 
 module.exports = router;
